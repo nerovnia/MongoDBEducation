@@ -1,0 +1,25 @@
+{
+  "name": "mongodbeducation",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nerovnia/MongoDBEducation.git"
+  },
+  "keywords": [],
+  "author": "Volodymyr Nerovnia <nerv@i.ua>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nerovnia/MongoDBEducation/issues"
+  },
+  "homepage": "https://github.com/nerovnia/MongoDBEducation#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "mongodb": "5.6"
+  }
+}
