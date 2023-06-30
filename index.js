@@ -1,6 +1,10 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const addCollection = require("./addCollection"); 
 require('dotenv').config();
+const addCollection = require("./addCollection"); 
+const addRecord = require("./addRecord"); 
+const fs = require('fs');
+
+const collectionData = require("./data/collectionData.json");
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -21,10 +25,8 @@ async function run() {
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("ByteCloud").command({ ping: 1 })
-//      .then(()=> {
-        await addCollection(client.db("ByteCloud"));
-        //await addAppointment(client.db("ByteCloud"));
-//    });
+    await addCollection(client.db("ByteCloud").collection("appointments"), collectionData);
+    await addRecord(client.db("ByteCloud").collection("appointments"), { "patient": 101, "doctor": 202, "hour": 9 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
@@ -32,40 +34,3 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
-async function addAppointment(myDB) {
-  //const myDB = client.db("myDB");
-  const myColl = myDB.collection("pizzaMenu");
-  const doc = { name: "Neapolitan pizza", shape: "round" };
-  const result = await myColl.insertOne(doc);
-  console.log(`A document was inserted with the _id: ${result.insertedId}`,
-  );
-}
-
-
-
-/*
-
-const { MongoClient } = require("mongodb");
-// Replace the uri string with your connection string.
-const uri = "mongodb+srv://nerv:r7EIwBcBihfJvqYk@cluster0.cov4yvg.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri);
-async function run() {
-  try {
-    const database = client.db('ByteCloud');
-    const movies = database.collection('appointments');
-    // Query for a movie that has the title 'Back to the Future'
-    const query = {
-      "patient": 101,
-      "doctor": 202,
-      "hour": 2
-    };
-    const movie = await movies.findOne(query);
-    console.log(movie);
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
-*/
